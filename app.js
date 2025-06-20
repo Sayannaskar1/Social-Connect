@@ -7,7 +7,7 @@ const app=express();
 const cookieParser=require('cookie-parser');
 app.use(cookieParser())
 var jwt = require('jsonwebtoken');
-const bcrypt=require('bcrypt');
+const bcrypt=require('bcryptjs');
 const user = require('./models/user');
 const upload = require('./config/multer');
 app.use(express.json());
