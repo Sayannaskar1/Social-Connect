@@ -9,4 +9,6 @@ services:
       - key: NODE_VERSION
         value: 18
       - key: PORT
-        value: 10000   # Optional, Render injects PORT automatically too
+        value: 10000 
+      - key: MONGO_URI
+        value: mongodb+srv://<sayan>:<Sayan123>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority  

@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-mongoose.connect(`mongodb://localhost:27017/new_DB`);
+
 const userSchema=mongoose.Schema({
     name:String,
     username:String,

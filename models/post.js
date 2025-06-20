@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-mongoose.connect(`mongodb://localhost:27017/new_DB`);
+
 const postSchema=mongoose.Schema({
     user:{type:mongoose.Schema.Types.ObjectId,ref:'user'},
     date:{
