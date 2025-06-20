@@ -1,10 +1,12 @@
 services:
   - type: web
-    name: my-app
+    name: express-auth-app
     env: node
+    plan: free
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node index.js
     envVars:
       - key: NODE_VERSION
         value: 18
-    plan: free
+      - key: PORT
+        value: 10000   # Optional, Render injects PORT automatically too
