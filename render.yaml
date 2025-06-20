@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: trakk
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: " node app.js" # <- replace with correct file name
