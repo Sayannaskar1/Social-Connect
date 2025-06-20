@@ -1,7 +1,10 @@
 services:
   - type: web
-    name: trakk
+    name: my-app
     env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18
     plan: free
-    buildCommand: "npm install"
-    startCommand: " node app.js" # <- replace with correct file name
