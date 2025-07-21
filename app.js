@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express=require('express');
 const userModel=require('./models/user')
 const postModel=require('./models/post');
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -42,7 +43,7 @@ app.post('/create',(req,res)=>{
     email,
     age,
     password:hash})
-    var token = jwt.sign({ email:email }, 'shhhhh');
+    var token = jwt.sign({ email:email }, process.env.SECRET_KEY);
     res.cookie('token',token);
     res.redirect('/profile');});});})
     app.get('/logout',(req,res)=>{
@@ -57,7 +58,7 @@ app.get('/login',(req,res)=>{
     if(!user)res.send('something wents wrong!');
     else{
         bcrypt.compare(password, user.password, function(err, result) {
-        if(result){ var token = jwt.sign({ email:email }, 'shhhhh');
+        if(result){ var token = jwt.sign({ email:email }, process.env.SECRET_KEY);
         res.cookie('token',token);
         res.redirect('/profile')}
         else {res.send("somthing wents wrong!");}
@@ -69,7 +70,7 @@ app.get('/profile',islogged, async(req,res)=>{
     res.render('profile',{user});})
     function islogged(req,res,next){
     if(req.cookies.token===''){res.redirect('/login');alert("you must log in ")}
-    else{const data=jwt.verify(req.cookies.token,'shhhhh');
+    else{const data=jwt.verify(req.cookies.token,process.env.SECRET_KEY);
     req.user=data;
     next();} }
     app.post('/post',islogged, async(req,res)=>{
@@ -120,4 +121,7 @@ app.get('/profile',islogged, async(req,res)=>{
 
 
 
-app.listen(3000);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

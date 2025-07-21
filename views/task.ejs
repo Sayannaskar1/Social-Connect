@@ -7,9 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-zinc-900 p-3 m-8 text-white">
-    <form action="/upload" autocomplete="off" enctype="multipart/form-data"  method="post">
-        <input  class="p-3 border-2 border-zinc-500 rounded-md" type="file" name="bal" id="">
-        <input  class="bg-yellow-600 rounded-lg px-2 py-3 ml-4" type="submit" value="Upload">
+    <form action="/upload" autocomplete="off" enctype="multipart/form-data" method="post">
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="text-red-500 mb-2"><%= error %></div>
+        <% } %>
+        <!-- CSRF token placeholder, add server-side implementation if using csurf -->
+        <% if (typeof csrfToken !== 'undefined') { %>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <% } %>
+        <label for="bal" class="block mb-2">Profile Picture</label>
+        <input class="p-3 border-2 border-zinc-500 rounded-md" type="file" name="bal" id="bal" accept="image/*" required aria-label="Upload profile picture">
+        <input class="bg-yellow-600 rounded-lg px-2 py-3 ml-4" type="submit" value="Upload">
     </form>
 
 
