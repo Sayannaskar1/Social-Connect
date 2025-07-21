@@ -4,12 +4,9 @@ const userModel=require('./models/user')
 const postModel=require('./models/post');
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.DB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB connected'))
-.catch((err) => console.error('MongoDB connection failed', err));
+mongoose.connect(process.env.DB_URL)
+  .then(() => console.log("Connected to DB"))
+  .catch((err) => console.error(err));
 
 // const Upload=require('upload');
 const path=require('path');
