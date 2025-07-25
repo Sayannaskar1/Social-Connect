@@ -1,12 +1,17 @@
+<<<<<<< HEAD
 // app.js
 require('dotenv').config(); // <--- This must be at the very top!
 
+=======
+require('dotenv').config();
+>>>>>>> 934fdc3c92870612cb33625095951d81b0203754
 const express=require('express');
 const userModel=require('./models/user')
 const postModel=require('./models/post');
 const mongoose = require('mongoose');
 const path=require('path'); // Ensure path is imported
 
+<<<<<<< HEAD
 // Define PORT constant by reading from process.env
 const PORT = parseInt(process.env.PORT, 10) || 3000;
 
@@ -17,6 +22,11 @@ mongoose.connect(process.env.DB_URL, {
 })
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.error('MongoDB connection failed', err));
+=======
+mongoose.connect(process.env.DB_URL)
+  .then(() => console.log("Connected to DB"))
+  .catch((err) => console.error(err));
+>>>>>>> 934fdc3c92870612cb33625095951d81b0203754
 
 
 const app=express();
@@ -45,6 +55,7 @@ app.post('/create',(req,res)=>{
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash(password, salt, async function(err, hash) {
             // Store hash in your password DB.
+<<<<<<< HEAD
             var user= await userModel.findOne({email});
             if(user){
                 return res.status(409).send('User with this email already exists.');
@@ -65,6 +76,20 @@ app.post('/create',(req,res)=>{
 });
 
 app.get('/logout',(req,res)=>{
+=======
+    var user= await userModel.findOne({email});
+    if(user){return res.status(300).redirect('/profile')}
+    const data= await userModel.create({
+    name,
+    username,
+    email,
+    age,
+    password:hash})
+    var token = jwt.sign({ email:email }, process.env.SECRET_KEY);
+    res.cookie('token',token);
+    res.redirect('/profile');});});})
+    app.get('/logout',(req,res)=>{
+>>>>>>> 934fdc3c92870612cb33625095951d81b0203754
     res.cookie("token","");
     res.redirect('/login');
 });
@@ -81,6 +106,7 @@ app.post('/login',async(req,res)=>{
     }
     else{
         bcrypt.compare(password, user.password, function(err, result) {
+<<<<<<< HEAD
             if(result){
                 // Use process.env.SESSION_SECRET here
                 var token = jwt.sign({ email:email }, process.env.SESSION_SECRET);
@@ -120,6 +146,26 @@ function islogged(req,res,next){
 app.post('/post',islogged, async(req,res)=>{
     const user= await userModel.findOne({email:req.user.email});
     const post= await postModel.create({
+=======
+        if(result){ var token = jwt.sign({ email:email }, process.env.SECRET_KEY);
+        res.cookie('token',token);
+        res.redirect('/profile')}
+        else {res.send("somthing wents wrong!");}
+        });}})
+
+app.get('/profile',islogged, async(req,res)=>{
+    const user=  await userModel.findOne({email:req.user.email}).populate('posts');
+    console.log(user);
+    res.render('profile',{user});})
+    function islogged(req,res,next){
+    if(req.cookies.token===''){res.redirect('/login');alert("you must log in ")}
+    else{const data=jwt.verify(req.cookies.token,process.env.SECRET_KEY);
+    req.user=data;
+    next();} }
+    app.post('/post',islogged, async(req,res)=>{
+        const user=  await userModel.findOne({email:req.user.email});
+        const post= await postModel.create({
+>>>>>>> 934fdc3c92870612cb33625095951d81b0203754
         user:user._id,
         content:req.body.content,
     });
@@ -168,6 +214,26 @@ app.post('/upload',islogged,upload.single('bal'),async(req,res)=>{
     res.redirect('/profile');
 });
 
+<<<<<<< HEAD
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+=======
+     
+
+
+
+       
+    })
+
+
+
+
+
+
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+>>>>>>> 934fdc3c92870612cb33625095951d81b0203754
