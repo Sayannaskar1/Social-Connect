@@ -1,4 +1,4 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
 
 const userSchema = new mongoose.Schema({
@@ -36,15 +36,17 @@ const userSchema = new mongoose.Schema({
     posts: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'post'
+            ref: 'post' // Reference to the 'post' model
         }
     ],
+    default: [] // <--- CORRECT PLACEMENT: This 'default' applies to the 'posts' array itself
+    , // <--- REMOVED: No comma needed here if 'profilepicture' follows directly
     profilepicture: {
         type: String,
         default: "default.jpg"
     }
 }, {
-    timestamps: true
+    timestamps: true // This automatically adds createdAt and updatedAt fields
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('user', userSchema); // Ensure 'user' matches the model name used in mongoose.model()
