@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Upload Profile Picture</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-zinc-900 p-3 m-8 text-white">
+<body class="bg-zinc-900 p-3 m-8 text-white font-sans">
+    <h1 class="text-2xl font-bold mb-6">Upload Profile Picture</h1>
     <form action="/upload" autocomplete="off" enctype="multipart/form-data" method="post">
         <% if (typeof error !== 'undefined' && error) { %>
             <div class="text-red-500 mb-2"><%= error %></div>
         <% } %>
-        <!-- CSRF token placeholder, add server-side implementation if using csurf -->
         <% if (typeof csrfToken !== 'undefined') { %>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <% } %>
-        <label for="bal" class="block mb-2">Profile Picture</label>
-        <input class="p-3 border-2 border-zinc-500 rounded-md" type="file" name="bal" id="bal" accept="image/*" required aria-label="Upload profile picture">
-        <input class="bg-yellow-600 rounded-lg px-2 py-3 ml-4" type="submit" value="Upload">
+        <label for="bal" class="block mb-2 text-zinc-300">Choose a file:</label>
+        <input class="p-3 border-2 border-zinc-500 rounded-md bg-zinc-800 text-white file:mr-4 file:py-2 file:px-4
+                      file:rounded-full file:border-0 file:text-sm file:font-semibold
+                      file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+               type="file" name="bal" id="bal" accept="image/*" required aria-label="Upload profile picture">
+        <input class="bg-yellow-600 rounded-lg px-4 py-2 ml-4 mt-6 hover:bg-yellow-700 transition-colors cursor-pointer font-semibold" type="submit" value="Upload">
     </form>
-
-
-    </body>
+</body>
+</html>

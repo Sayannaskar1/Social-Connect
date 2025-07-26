@@ -26,19 +26,19 @@
         <div class="rounded-full w-16 h-16 overflow-hidden border-2 border-zinc-700 flex-shrink-0">
             <%
                 // Determine the image source. If profilepicture is missing or default, use a placeholder.
-                // Adjusted path to use '/image/upload/' (singular 'image')
+                // Path adjusted to use '/image/upload/' (singular 'image')
                 const profileImageSrc = user.profilepicture && user.profilepicture !== 'default.jpg'
                     ? `/image/upload/${user.profilepicture}` // Corrected path here
-                    : '/image/default-profile.png'; // Corrected path here for fallback
+                    : '/images/upload/default.jpg'; // Corrected path here for fallback
             %>
             <img
                 class="w-full h-full object-cover"
-                src='images/upload/default.jpg'
-                alt="404"
-                
+                src="<%= profileImageSrc %>"
+                alt="<%= user.username %>'s profile picture"
+                onerror="this.onerror=null;this.src='/image/default-profile.png';" // Corrected path here for onerror fallback
             >
             <script>
-                // Debugging: Log the actual image source being used
+                // Debugging: Log the actual image source being used (visible in browser console)
                 console.log('Attempting to load Profile Image Source:', '<%= profileImageSrc %>');
             </script>
         </div>
