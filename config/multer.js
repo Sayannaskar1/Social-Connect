@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
         // This path is crucial. It tells Multer where to save the files.
         // It resolves to: C:\Users\91628\OneDrive\Desktop\Social-Connect\public\image\upload
         // assuming multer.js is in 'config' folder and 'public' is in the project root.
-        cb(null, path.join(__dirname, '..', 'public', 'image', 'upload'));
+        cb(null, path.join(__dirname, '..', 'public', 'images', 'upload'));
     },
     filename: function(req, file, cb) {
         // This creates a unique filename for the uploaded image using crypto

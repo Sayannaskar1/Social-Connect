@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,5 +22,58 @@
                type="file" name="bal" id="bal" accept="image/*" required aria-label="Upload profile picture">
         <input class="bg-yellow-600 rounded-lg px-4 py-2 ml-4 mt-6 hover:bg-yellow-700 transition-colors cursor-pointer font-semibold" type="submit" value="Upload">
     </form>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Profile Picture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e0e4eb 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center text-gray-900">
+
+    <div class="p-10 bg-white rounded-xl shadow-2xl w-full max-w-md border border-gray-200">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">Upload Profile Picture</h1>
+
+        <form action="/upload" autocomplete="off" enctype="multipart/form-data" method="post">
+            <% if (typeof error !== 'undefined' && error) { %>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center text-sm animate-pulse mb-6"><%= error %></div>
+            <% } %>
+            <% if (typeof csrfToken !== 'undefined') { %>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <% } %>
+
+            <label for="bal" class="block mb-4 text-sm font-medium text-gray-700">Choose a file:</label>
+            
+            <div class="flex items-center justify-center w-full">
+                <label for="bal" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 border-gray-300 hover:bg-gray-100 transition-colors">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-8 h-8 mb-4 text-gray-500" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0l-3 3m3-3l3 3"/>
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500">PNG, JPG or JPEG (MAX. 5MB)</p>
+                    </div>
+                    <input id="bal" name="bal" type="file" class="hidden" accept="image/*" required>
+                </label>
+            </div>
+            
+            <button
+                type="submit"
+                class="w-full mt-8 bg-gradient-to-r from-yellow-500 to-yellow-600 px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50"
+            >
+                Upload
+            </button>
+        </form>
+    </div>
 </body>
 </html>
