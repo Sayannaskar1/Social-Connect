@@ -48,10 +48,12 @@ app.use(passport.session());
 
 // Use the environment variable for the callback URL
 const appUrl = process.env.APP_URL || 'http://localhost:3000';
+const callbackProtocol = appUrl.startsWith('https') ? 'https' : 'http';
+
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${appUrl}/auth/google/callback` // Use the dynamic URL
+    callbackURL: `${callbackProtocol}://` + `${appUrl.replace(/https?:\/\//, '')}/auth/google/callback`
 },
 async (accessToken, refreshToken, profile, done) => {
     try {
