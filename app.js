@@ -37,11 +37,23 @@ app.use(express.static(path.join(__dirname,'public')));
 app.set('view engine','ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// --- New MongoDB Session Store Configuration ---
+const MongoDBStore = require('connect-mongodb-session')(session);
+const store = new MongoDBStore({
+    uri: process.env.DB_URL,
+    collection: 'sessions', // 'sessions' is the default collection name
+});
+
+store.on('error', (error) => {
+    console.error('Session store error:', error);
+});
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true } // Set to true for production with HTTPS
+    store: store, // Use the new MongoDB store
+    cookie: { secure: true }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
